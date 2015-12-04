@@ -26,14 +26,12 @@ Supermarkt.prototype.createArray = function(x,y){
   return ret;
 }
 
-/*funktioniert noch nicht richtig
-Soll eigentlich ein rechteckiges Regal von [a,b] bis [x,y] ziehen
-*/
+/*instantiiert ein Rechteck an Regalen von a,b bis x,y*/
 Supermarkt.prototype.setShelf = function(a,b,x,y){
   for (var i = b; i <= y; i++){
     for (var j = a; j <= x; j++){
       //alert('in');
-      this.areaArr[j,i] = new Regal();
+      this.areaArr[j][i] = new Regal();
     }
   }
 }
@@ -71,7 +69,7 @@ function drawStore(supermarket){ //temporäre Lösung um überhaupt irgendwas zu
     pushTable += '<tr>';
     for(var j = 0; j < supermarket.x; j++){
       pushTable += '<td>';
-      if(supermarket.areaArr[i,j] instanceof Regal) pushTable += 'R';
+      if(supermarket.areaArr[j][i] instanceof Regal) pushTable += 'R';
       else pushTable += 'X';
       pushTable += '</td>';
 
@@ -86,5 +84,5 @@ function drawStore(supermarket){ //temporäre Lösung um überhaupt irgendwas zu
 
 var util = new UtilityClass();
 var kunde1 = new Kunde();
-var supi1 = new Supermarkt(2,3);
+var supi1 = new Supermarkt(4,7);
 //alert(supi1.areaArr);
