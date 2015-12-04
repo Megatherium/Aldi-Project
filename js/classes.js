@@ -26,18 +26,58 @@ Supermarkt.prototype.createArray = function(x,y){
   return ret;
 }
 
+Supermarkt.prototype.getTile = function(x,y){
+  return this.areaArr[y][x];
+};
+
 /*instantiiert ein Rechteck an Regalen von a,b bis x,y*/
-Supermarkt.prototype.setShelf = function(a,b,x,y){
+Supermarkt.prototype.rectShelf = function(a,b,x,y,z){
   for (var i = b; i <= y; i++){
     for (var j = a; j <= x; j++){
       //alert('in');
-      this.areaArr[j][i] = new Regal();
+      this.areaArr[j][i] = new Regal(z);
     }
   }
-}
+};
 
-var Regal = function(){
-  this.name = 'regal'+regalCounter;
+Supermarkt.prototype.setShelf = function(x,y,z){
+  this.areaArr[y][x] = new Regal(z);
+};
+
+Supermarkt.prototype.drawStore = function(){ //temporäre Lösung um überhaupt irgendwas zu sehen
+  pushTable = '<table>';
+  for(var i = 0; i < this.y; i++){
+    pushTable += '<tr>';
+    for(var j = 0; j < this.x; j++){
+      pushTable += '<td>';
+      switch(this.getTile(j,i).type){
+        case ('Lager'):
+         pushTable += 'L';
+         break;
+        case ('Verkauf'):
+          pushTable += 'V';
+          break;
+        case ('Kasse'):
+          pushTable += 'K';
+          break;
+        default:
+          pushTable += 'X';
+          break;
+      }
+
+      pushTable += '</td>';
+
+    }
+    pushTable += '</tr>';
+
+  }
+  pushTable += '</table>'
+  $('#Laden').html(pushTable)// = pushTable;
+}
+var Regal = function(type){
+
+  this.type = (type == 'Lager') ? 'Lager' : 'Verkauf';
+  this.name = 'regal'+regalCounter; //kann nur sauber eingehalt werden durch eval
   this.desc = "Regal";
   this.itemVolume = 0.04;
   this.Volume = 1; //Platzhalter, muss von DB abgerufen werden
@@ -61,28 +101,12 @@ var UtilityClass = function(){ //noch nicht klar ob benötigt
   //this.createArray =
 }
 
-function drawStore(supermarket){ //temporäre Lösung um überhaupt irgendwas zu sehen
-  //alert('drawStore');
-   //ladendiv = document.getElementById('Laden');
-   pushTable = '<table>';
-  for(var i = 0; i < supermarket.y; i++){
-    pushTable += '<tr>';
-    for(var j = 0; j < supermarket.x; j++){
-      pushTable += '<td>';
-      if(supermarket.areaArr[j][i] instanceof Regal) pushTable += 'R';
-      else pushTable += 'X';
-      pushTable += '</td>';
 
-    }
-    pushTable += '</tr>';
-  }
-  pushTable += '</table>'
-  $('#Laden')[0].innerHTML = pushTable;
-}
 
 //Testinstaziierung
 
 var util = new UtilityClass();
 var kunde1 = new Kunde();
-var supi1 = new Supermarkt(4,7);
+var supi1 = new Supermarkt(60,40);
+
 //alert(supi1.areaArr);
