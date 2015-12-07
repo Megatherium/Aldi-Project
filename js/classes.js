@@ -1,9 +1,4 @@
-/* dreckige Globals, muss man schauen was man mit macht*/
 
-
- alleRegale = [];
- regalCounter = 1;
-time = 12; // Platzhalter, Tikcer muss noch implementiert werden
 
 
 var Supermarkt = function(x,y){
@@ -94,19 +89,11 @@ var Kunde = function(){
   this.entryTime = util.getTime();
 }
 
+
+
 var UtilityClass = function(){ //noch nicht klar ob benötigt
   this.getTime = function(){
     return time;
   }
   //this.createArray =
 }
-
-
-
-//Testinstaziierung
-
-var util = new UtilityClass();
-var kunde1 = new Kunde();
-var supi1 = new Supermarkt(60,40);
-
-//alert(supi1.areaArr);

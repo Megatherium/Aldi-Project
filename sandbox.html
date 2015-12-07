@@ -3,13 +3,21 @@
 <head>
 <script src="./js/classes.js"></script>
 <script src="./js/jquery-2.1.4.min.js"></script>
+<script src="./js/main.js"></script>
 </head>
-<body >
+<body>
+  <div id="debug" style="height: 50px"></div>
+  <div id="speedDiv" style="height: 50px">
+    <input id="speed" type="number" value="2">
+  </div>
   <div id="Laden"></div>
   <button onclick="supi1.drawStore();">Draw</button>
-  <script>
-  supi1.rectShelf(12,14,22,26);
-  supi1.drawStore();
+  <button onclick="run = !run;">Start/Stop</buttion>
+  <script defer>
+  setup();
+  go();
+  //supi1.rectShelf(12,14,22,26);
+  //supi1.drawStore();
   </script>
 </body>
 </html>
