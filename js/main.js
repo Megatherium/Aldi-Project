@@ -21,11 +21,19 @@ while(run){
 }
 }*/
 
+artArr1 = "";
+artikel = "";
 function go(){
   simSpeed = $('#speed')[0].value;
-  if(run) setTimeout(go,(SEC/simSpeed));
+  //if(run) setTimeout(go,(SEC/simSpeed));
   clicks++;
-  $('#debug').html(clicks);
+  //$('#debug').html(clicks);
+  //artikel = $.ajax("http://localhost/Aldi-Project/php/artikel.php")
+  artikel = $.ajax("./js/material");
+  artikel.done(function(x){alert(x);});
+  //artArr1 = artikel.responseText.split("\r\n");
+  //artikel.responseText
+  //artikel.done(function(jes){artArr = JSON.parse(jes)});
   supi1.drawStore();
 
 }

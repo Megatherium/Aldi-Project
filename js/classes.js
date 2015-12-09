@@ -1,6 +1,3 @@
-
-
-
 var Supermarkt = function(x,y){
   this.x = x;
   this.y = y;
@@ -69,13 +66,13 @@ Supermarkt.prototype.drawStore = function(){ //temporäre Lösung um überhaupt 
   pushTable += '</table>'
   $('#Laden').html(pushTable)// = pushTable;
 }
-var Regal = function(type){
+var Regal = function(type, _vol){
 
   this.type = (type == 'Lager') ? 'Lager' : 'Verkauf';
   this.name = 'regal'+regalCounter; //kann nur sauber eingehalt werden durch eval
-  this.desc = "Regal";
-  this.itemVolume = 0.04;
-  this.Volume = 1; //Platzhalter, muss von DB abgerufen werden
+  //this.desc = "Regal";
+  this.itemVolume = _vol;//0.04;
+  //this.Volume = 1; //Platzhalter, muss von DB abgerufen werden
   this.maxItems = Math.floor(this.Volume/this.itemVolume);
   this.currItems = this.setStartItems();
   alleRegale.push(this);
