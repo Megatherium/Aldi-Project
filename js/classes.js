@@ -75,6 +75,9 @@ var Regal = function(type, _vol){
   //this.Volume = 1; //Platzhalter, muss von DB abgerufen werden
   this.maxItems = Math.floor(this.Volume/this.itemVolume);
   this.currItems = this.setStartItems();
+  this.isLow = function(warnstand){
+    if this.currItems / this.maxItems < warnstand return true
+  }
   alleRegale.push(this);
   regalCounter++;
 }

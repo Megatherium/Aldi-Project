@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="./js/classes.js"></script>
+<script src="./js/classes2.js"></script>
 <script src="./js/jquery-2.1.4.min.js"></script>
-<script src="./js/main.js"></script>
+<!--<script src="./js/main.js"></script>-->
 </head>
 <body>
   <div id="debug" style="height: 50px"></div>
@@ -14,8 +14,9 @@
   <button onclick="supi1.drawStore();">Draw</button>
   <button onclick="run = !run;">Start/Stop</buttion>
   <script defer>
-  setup();
-  go();
+  supi1 = new Supermarkt(60,40);
+  //setup();
+  //go();
   //supi1.rectShelf(12,14,22,26);
   //supi1.drawStore();
   </script>

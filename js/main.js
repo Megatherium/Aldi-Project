@@ -25,7 +25,7 @@ artArr1 = "";
 artikel = "";
 function go(){
   simSpeed = $('#speed')[0].value;
-  //if(run) setTimeout(go,(SEC/simSpeed));
+  if(run) setTimeout(go,(SEC/simSpeed));
   clicks++;
   //$('#debug').html(clicks);
   //artikel = $.ajax("http://localhost/Aldi-Project/php/artikel.php")
