@@ -45,12 +45,7 @@ Tile.prototype.addShelf = function(){
 
 Tile.prototype.removeShelf = function(){
   delete this.shelf;
-  /*shelfArray.forEach(function(elem,index){
-    if (elem.x == caller.x && elem.y == this.y) delete shelfArray[index];
-  })*/
-  for (var i = 0; i < customerArray.length; i++){
-    if
-  }
+  shelfArray = cutnsplice(this.x,this.y,shelfArray)
   shelfCounter--;
 };
 
@@ -96,9 +91,5 @@ Customer.prototype.timeInStore = function () {
 };
 
 var Zettel = function(){
-
-}
-
-function cutnsplice(x,y,arr){
 
 }
