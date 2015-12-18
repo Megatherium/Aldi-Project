@@ -20,10 +20,12 @@
   <div id="debug" style="height: 50px"></div>
   <div id="speedDiv" style="height: 50px">
     <input id="speed" type="number" value="2">
+    <button onclick="minus($('#speed')[0].value);colorAll();">Remove Items</button>
+    <button onclick="drawStore(supi);">Draw</button>
+    <button onclick="oneClick();">Setup</button>
   </div>
   <div id="Laden"></div>
-  <button onclick="drawStore(supi);">Draw</button>
-  <button onclick="run = !run;">Start/Stop</button>
+
   <script src="./js/main.js"></script>
 
 

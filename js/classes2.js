@@ -5,6 +5,7 @@ shelfArray = [];
 customerArray = [];
 
 SHELFSIZE = 1;
+MAXLISTITEMS = 12;
 
 //Supermarkt enthält Array, dass alle Tiles enthält
 var Supermarkt = function(x,y){
@@ -27,14 +28,14 @@ Supermarkt.prototype.createArray = function(x,y){
   return ret;
 }
 
-Supermarkt.prototype.getTile = function(x,y){
+Supermarkt.prototype.getTile = function(x,y){ //gibt Kachel x,y zurück, bedingt bequemer als Supermarkt.area
   return this.area[y][x];
 };
 
-Supermarkt.prototype.setup = function () {
+Supermarkt.prototype.setup = function () { //setzt regale in Doppelreihen
   var anzWaren = warenliste.length;
   var ybound = this.y -3;
-  var xbound = (this.x < regaleProReihe ? this.x : regaleProReihe);
+  var xbound = (this.x < regaleProReihe ? (this.x - 1): regaleProReihe); // limitiert x-Richtung, wenn regaleProReihe größer als der Supermarkt ist
 
   outer:
   for (var q = 0; q < ybound; q += 3){
@@ -50,7 +51,7 @@ Supermarkt.prototype.setup = function () {
   }
 };
 
-var Tile = function(x,y){
+var Tile = function(x,y){ // jede area-Koordinate ist ein Tile-Objekt, was einen generellen Container darstellt
   this.x = x;
   this.y = y;
   this.number = tileCounter++;
@@ -74,6 +75,8 @@ Tile.prototype.spawnCustomer = function(){
 Tile.prototype.despawnCustomer = function(n){
   // body...
 };
+
+
 var Shelf = function(x,y){
   this.x = x;
   this.y = y;
@@ -94,11 +97,23 @@ Shelf.prototype.setup = function(x){
 
 };
 
+Shelf.prototype.setBG = function () { //setzt die Hintergrundfarbe des Regals, von rot bis grün
+  var id = this.number
+  var mix = this.currItems / this.maxItems;
+  var col;
+  if (mix == 0.5) col = 'rgb(255,255,0)';
+  else if (mix < 0) col = 'rgb(255,0,0)';
+  else if (mix < 0.5) col = 'rgb(255,'+Math.floor(255*(2*mix))+',0)';
+  else col = 'rgb('+Math.floor((255-(255*mix)))+',255,0)';
+  //alert(col);
+  $('#r'+id).css('background-color',col)
+
+};
 var Customer = function(x,y){
   this.x = x;
   this.y = y;
   this.number = customerCounter++;
-  this.zettel = new Zettel();
+  this.zettel = Zettel();
   this.entryTime = timer;
 
   customerArray.push(this);
@@ -109,6 +124,15 @@ Customer.prototype.timeInStore = function () {
   return (timer - this.entryTime)
 };
 
-var Zettel = function(){
+function Zettel(){ //liefert Array mit [artnr,anzahl] zurück
+  var numItems = Math.ceil(Math.random()*MAXLISTITEMS);
+  var items = [];
+  for (var i = 0; i < numItems; i++){
+    var loopArr = [];
+    loopArr[0] = Math.floor(Math.random()*warenliste.length);
+    loopArr[1] = Math.ceil(Math.random()*shelfArray[loopArr[0]].maxItems);
+    items.push(loopArr);
 
+  }
+  return items.sort();
 }
