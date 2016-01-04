@@ -3,7 +3,7 @@ shelfCounter = 0;
 customerCounter = 0;
 shelfArray = [];
 customerArray = [];
-
+timer = 12 // Dummyvariable
 SHELFSIZE = 1;
 MAXLISTITEMS = 12;
 
@@ -68,20 +68,34 @@ Tile.prototype.removeShelf = function(){
   shelfCounter--;
 };
 
-Tile.prototype.spawnCustomer = function(){
-  this.customers.push(new Customer(this.x,this.y))
+Tile.prototype.spawnCustomer = function(){ //erzeugt Kunden in Tile.customers, Kunde wird durch eigenen Konstruktor in customerArray gepusht
+
+  this.customers.push(new Customer(this.x,this.y));
+
 };
 
 Tile.prototype.despawnCustomer = function(n){
-  // body...
+  var cus = this.customers[n];
+  cutnsplice(cus.x,cus.y,customerArray,cus.number);
+  cutnsplice(cus.x,cus.y,this.customers,cus.number);
+  customerCounter--;
 };
 
+Tile.prototype.moveCustomer = function (toX,toY,num) {
+  customerArray[(this.customers[num].number)].x = toX;
+  customerArray[(this.customers[num].number)].y = toY;
+  supi.getTile(toX,toY).customers.push(this.customers[num]);
+  this.customers.splice(num);
+};
 
 var Shelf = function(x,y){
   this.x = x;
   this.y = y;
   this.number = shelfCounter++;
   this.volume = SHELFSIZE;
+  if (arguments.length <= 2) this.isLager = false;
+  else this.isLager = true;
+
   this.setup(this.number);
 
   shelfArray.push(this);
@@ -94,6 +108,7 @@ Shelf.prototype.setup = function(x){
   this.itemVolume = warenliste[x][1]
   this.maxItems = Math.floor(this.volume/this.itemVolume);
   this.currItems = this.maxItems;
+
 
 };
 
@@ -113,7 +128,7 @@ var Customer = function(x,y){
   this.x = x;
   this.y = y;
   this.number = customerCounter++;
-  this.zettel = Zettel();
+  this.list = createShoppingList();
   this.entryTime = timer;
 
   customerArray.push(this);
@@ -124,7 +139,8 @@ Customer.prototype.timeInStore = function () {
   return (timer - this.entryTime)
 };
 
-function Zettel(){ //liefert Array mit [artnr,anzahl] zurück
+
+function createShoppingList(){ //liefert Array mit [artnr,anzahl] zurück
   var numItems = Math.ceil(Math.random()*MAXLISTITEMS);
   var items = [];
   for (var i = 0; i < numItems; i++){

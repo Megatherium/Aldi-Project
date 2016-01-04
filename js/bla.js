@@ -1,10 +1,19 @@
-function cutnsplice(x,y,arr){
-  var snip = arr.findIndex(function(e,i,a){
-    if (e.x == x && e.y == y) return true
-        else return false
-  })
-
-  if (snip == 0){
+function cutnsplice(x,y,arr,num){
+  if (arguments.length == 3){
+    var snip = arr.findIndex(function(e,i,a){
+      if (e.x == x && e.y == y) return true
+          else return false
+    })
+  }
+  else {
+    var snip = arr.findIndex(function(e,i,a){
+      if (e.x == x && e.y == y && e.number == num) return true
+          else return false
+    })
+  }
+  arr.splice(snip,1);
+  return arr;
+  /*if (snip == 0){
     return arr.slice(1);
   }
   else if (snip == (arr.length - 1)) {
@@ -15,7 +24,7 @@ function cutnsplice(x,y,arr){
   }
   else {
     return arr.slice(0,snip).concat(arr.slice((snip+1)))
-      }
+  }*/
 }
 
 drawStore = function(bork){ //temporäre Lösung um überhaupt irgendwas zu sehen, alle Regale sind O, alles leere X, Regale kriegen eine r### ID
@@ -27,7 +36,10 @@ drawStore = function(bork){ //temporäre Lösung um überhaupt irgendwas zu sehe
         //pushTable += '<td id="r'+area[i][j].shelf.number+'">';
        pushTable += '<td id=\'r'+bork.area[i][j].shelf.number+'\'>O';
      }
+     else if (bork.area[i][j].customers.length > 0){
 
+       pushTable += '<td>'+bork.area[i][j].customers.length;
+     }
       else pushTable += '<td>X';
 
 
@@ -39,6 +51,7 @@ drawStore = function(bork){ //temporäre Lösung um überhaupt irgendwas zu sehe
   }
   pushTable += '</table>'
   $('#Laden').html(pushTable)// = pushTable;
+  colorAll();
 }
 
 function colorAll(){ //färbt alle Felder
